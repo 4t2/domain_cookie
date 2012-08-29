@@ -12,7 +12,16 @@ class CookieHook
 {
 	public function setCookie($objCookie)
 	{
-		$objCookie->strDomain = strstr($_SERVER['HTTP_HOST'], '.');
+		$domain = $_SERVER['HTTP_HOST'];
+		
+		$parts = explode('.', $_SERVER['HTTP_HOST']);
+		
+		if (count($parts) > 1)
+		{
+			$domain = implode('.', array_slice($parts, count($parts)-2, 2));
+		}
+		
+		$objCookie->strDomain = '.'.$domain;
 
 		return $objCookie;
 	}
